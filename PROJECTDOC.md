@@ -1,0 +1,6 @@
+- [ ] Create JSON frame.
+- [ ] Set up location for storing and accesing credentials.
+- [ ] Build logic to process input and store only basic credentials.
+- [ ] Build logic to retrive credentials when searched.
+- [ ] encrypt credential storage location.
+- [ ] Build logic to process input and store all personal data.
