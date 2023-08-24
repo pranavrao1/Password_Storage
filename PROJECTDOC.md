@@ -4,3 +4,4 @@
 - [ ] Build logic to retrive credentials when searched.
 - [ ] encrypt credential storage location.
 - [ ] Build logic to process input and store all personal data.
+- [ ] Use Mac finger touch to open file.
