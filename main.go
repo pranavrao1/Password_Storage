@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"io/ioutil"
+	"strings"
 )
 
 func ConfigExits() bool {
@@ -38,4 +39,27 @@ func main() {
 		fmt.Println("No inputs provided.")
 		return
 	}
+
+	if (len(os.Args) == 2) {
+		return
+	}
+
+	if (len(os.Args) == 5) {
+		processCreation()
+		return
+	}
+
+	fmt.Println("Too many inputs provided.")
+	return
+}
+
+func processCreation() {
+	cmd := string(os.Args[1]);
+	if (!strings.EqualFold(cmd, "save")) {
+		fmt.Println("Comand not recognised: " + cmd)
+	}
+
+	cred := Credential{alias: string(os.Args[2]), username: string(os.Args[3]), password: string(os.Args[4])}
+	fmt.Println("Saving Credential ", cred)
+	return
 }
