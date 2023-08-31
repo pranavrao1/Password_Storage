@@ -3,24 +3,23 @@ package main
 import (
 	"fmt"
 	"os"
-	"io/ioutil"
 	"strings"
 )
 
 func ConfigExits() bool {
-	if _, err := os.Stat("conf.json"); err != nil {
+	_, err := os.ReadFile("conf.json")
+	if err != nil {
 		return false
-	} else {
-		return true
 	}
+	return true
 }
 
-func Dump() {
-	cred1 := Credential{alias: "Alias"}
-	fmt.Println("Running Credential", cred1)
-	fmt.Println(ConfigExits())
-	_ = ioutil.WriteFile("test.json", []byte(os.Args[0]), 0644)
-}
+// func Dump() {
+// 	cred1 := Credential{alias: "Alias"}
+// 	fmt.Println("Running Credential", cred1)
+// 	fmt.Println(ConfigExits())
+// 	_ = ioutil.WriteFile("test.json", []byte(os.Args[0]), 0644)
+// }
 
 type Credential struct {
 	alias string
