@@ -4,15 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"io/ioutil"
 )
-
-func ConfigExits() bool {
-	_, err := os.ReadFile("conf.json")
-	if err != nil {
-		return false
-	}
-	return true
-}
 
 // func Dump() {
 // 	cred1 := Credential{alias: "Alias"}
@@ -21,16 +14,10 @@ func ConfigExits() bool {
 // 	_ = ioutil.WriteFile("test.json", []byte(os.Args[0]), 0644)
 // }
 
-type Credential struct {
-	alias string
-	username string
-	password string
-}
-
 func main() {
 
-	if !ConfigExits() {
-		fmt.Println("Please create a file called \"conf.json\" and enter the full path to store credentials")
+	if !checkConfigFile() {
+		fmt.Println("Please create a file called \"conf.json\" and enter the full path to store credentials.\nThe first line should be the path to json file where credentials are stored.\nSecond line should be the password to decrypt file.")
 		return
 	} 
 
@@ -61,4 +48,28 @@ func processCreation() {
 	cred := Credential{alias: string(os.Args[2]), username: string(os.Args[3]), password: string(os.Args[4])}
 	fmt.Println("Saving Credential ", cred)
 	return
+}
+
+func checkConfigFile() bool {
+	_, err := os.ReadFile("conf.json")
+	if err != nil {
+		return false
+	}
+	
+	config_file, err := os.Open("conf.json")
+    if err != nil {
+        return false
+    }
+
+    result, err := ioutil.ReadAll(config_file)
+    if err != nil {
+        return false
+    }
+ 
+	lines := strings.Split(string(result), "\n")
+	if len(lines) != 2 {
+		return false
+	}
+
+	return strings.HasSuffix(lines[0], ".json")
 }
