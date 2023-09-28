@@ -1,7 +1,7 @@
 package main
 
 type Credential struct {
-	alias string
+	alias    string
 	username string
 	password string
 }
