@@ -1,7 +1,11 @@
 package main
 
 type Credential struct {
-	alias    string
-	username string
-	password string
+	Alias    string
+	Username string
+	Password string
+}
+
+type CredentialCache struct {
+	credentials []Credential
 }

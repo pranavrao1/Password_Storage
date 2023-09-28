@@ -34,7 +34,7 @@ func main() {
 	db, _ := initializeDB()
 	err := db.loadCredentials()
 	if err != nil {
-		fmt.Println("Failure to connect to DB")
+		fmt.Println("Failure to connect to DB", err)
 		fmt.Println(db.locateDB())
 		return
 	}
@@ -56,8 +56,8 @@ func processCreation() {
 		fmt.Println("Comand not recognised: " + cmd)
 	}
 
-	cred := Credential{alias: string(os.Args[2]), username: string(os.Args[3]), password: string(os.Args[4])}
-	fmt.Println("Saving Credential ", cred)
+	// cred := Credential{alias: string(os.Args[2]), username: string(os.Args[3]), password: string(os.Args[4])}
+	// fmt.Println("Saving Credential ", cred)
 	return
 }
 
