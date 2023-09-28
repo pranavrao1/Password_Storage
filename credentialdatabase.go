@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 )
 
@@ -12,15 +11,13 @@ type CredentialDatabase struct {
 
 var cache map[string]Credential
 
-func (cd *CredentialDatabase) loadCredentials() {
+func (cd *CredentialDatabase) loadCredentials() error {
 	_, err := os.Open(cd.filePath)
-	if err != nil {
-		fmt.Println("Unable to read file provided in conf.json")
-	}
+	return err
 }
 
-func (cd *CredentialDatabase) dbSetup() (string, string) {
-	return cd.filePath, cd.filePassword
+func (cd *CredentialDatabase) locateDB() string {
+	return "Database is stored at path: " + cd.filePath
 }
 
 func loadFile() bool {

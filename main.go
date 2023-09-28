@@ -26,14 +26,18 @@ func main() {
 		return
 	}
 
-	if len(os.Args) != 2 || len(os.Args) != 5 {
+	if len(os.Args) != 2 && len(os.Args) != 5 {
 		fmt.Println("Incorrect inputs provided. Please provide a search value or four values to correctly enter new credential.")
 		return
 	}
 
-	db := initializeDB()
-	fmt.Println(db.dbSetup())
-	db.loadCredentials()
+	db, _ := initializeDB()
+	err := db.loadCredentials()
+	if err != nil {
+		fmt.Println("Failure to connect to DB")
+		fmt.Println(db.locateDB())
+		return
+	}
 
 	if len(os.Args) == 2 {
 		// Search for value
@@ -41,7 +45,7 @@ func main() {
 	}
 
 	if len(os.Args) == 5 {
-		// processCreation()
+		processCreation()
 		return
 	}
 }
@@ -81,9 +85,15 @@ func checkConfigFile() bool {
 	return strings.HasSuffix(lines[0], ".json")
 }
 
-func initializeDB() *CredentialDatabase {
-	config_file, _ := os.Open("conf.json")
-	result, _ := ioutil.ReadAll(config_file)
+func initializeDB() (*CredentialDatabase, error) {
+	config_file, err := os.Open("conf.json")
+	if err != nil {
+		return nil, err
+	}
+	result, err := ioutil.ReadAll(config_file)
+	if err != nil {
+		return nil, err
+	}
 	lines := strings.Split(string(result), "\n")
-	return &CredentialDatabase{lines[0], lines[1]}
+	return &CredentialDatabase{lines[0], lines[1]}, nil
 }

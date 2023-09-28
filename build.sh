@@ -1,1 +1,1 @@
-go build *.go
+go build main.go credential.go credentialdatabase.go
