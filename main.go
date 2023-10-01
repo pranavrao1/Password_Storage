@@ -41,6 +41,9 @@ func main() {
 
 	if len(os.Args) == 2 {
 		// Search for value
+		searchAlias := string(os.Args[1])
+		results := db.searchCredentials(searchAlias)
+		fmt.Println(results)
 		return
 	}
 

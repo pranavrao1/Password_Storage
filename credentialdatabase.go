@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -23,13 +22,17 @@ func (cd *CredentialDatabase) loadCredentials() error {
 	if err != nil {
 		return err
 	}
-	var cache Credential
-	err = json.Unmarshal([]byte(jsonOutput), &cache)
+	var values []Credential
+	err = json.Unmarshal([]byte(jsonOutput), &values)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(cache)
+	cache = make(map[string]Credential)
+	for _, c := range values {
+		alias := c.Alias
+		cache[alias] = c
+	}
 	return nil
 }
 
@@ -37,6 +40,6 @@ func (cd *CredentialDatabase) locateDB() string {
 	return "Database is stored at path: " + cd.filePath
 }
 
-func loadFile() bool {
-	return true
+func (cd *CredentialDatabase) searchCredentials(searchAlias string) Credential {
+	return cache[searchAlias]
 }
